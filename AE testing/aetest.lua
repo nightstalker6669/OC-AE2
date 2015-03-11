@@ -3,7 +3,7 @@ local ae = component.proxy(component.list("me_controller")())
     local toCraft = {"Oak Wood Planks", 1}
     local crafting = {}
     local craftables = ae.getCraftables()
-  local networkItems = ae.getItemsInNetwork()
+    
   if craftables == nil then return end
     for _,label in ipairs(toCraft) do
         print(label)
