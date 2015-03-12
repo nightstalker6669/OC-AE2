@@ -6,10 +6,7 @@ local term = require("term")
 local tun = component.proxy(component.list("tunnel")())
 local running = true
 local gpu = component.gpu
-local percentpowerlow = 0
-local percentpowerhigh = 0
 local reactorinfo = {}
-local charging = false
 gpu.setResolution(45, 16)
 term.clear()
 tun.send("reactorinfo")
@@ -31,7 +28,6 @@ end
  
 term.clear()
 while running do
-charging = reactorinfo.isactive
 printXY(1, 1, "Reactor Information")
 printXY(2, 1, "=========================")
  
@@ -55,17 +51,7 @@ printXY(11, 1, "=========================")
     end
 printXY(13, 1, "Current Capacitor: " ..reactorinfo.curcap.." / "..reactorinfo.maxcapacity)
  
-percentpowerlow = math.floor(.1*reactorinfo.maxcapacity)
-percentpowerhigh = math.floor(.99*reactorinfo.maxcapacity)
- 
-     if reactorinfo.curcap < percentpowerlow and charging == false then
-        tun.send("activate")
-        charging = true
-     elseif reactorinfo.curcap > percentpowerhigh and charging == true then
-            tun.send("deactivate")
-            charging = false
-     end  
- 
+
         tun.send("reactorinfo")
     local _, _, from, port, _, message = event.pull("modem_message")
         if string.find(message, "isactive") ~= nil then
