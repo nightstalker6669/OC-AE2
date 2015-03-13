@@ -3,36 +3,30 @@ local ae = component.proxy(component.list("me_controller")())
 local term = require("term")
     local toCraft = {}
     local crafting = {}
-    local temptable = {}
     local craftables = ae.getCraftables()
   local networkItems = ae.getItemsInNetwork()
-  
-  
+    local temptable = {}
+ 
+ 
 function craftlist()
-  if craftables == nil then 
-    return 
-  end
+    local temptable = {}
     for xkey, xvalue in ipairs(craftables) do
         table.insert(temptable, xvalue.getItemStack().label)
     end
     return temptable
   end
-
-function craftmanager()
-    b = listBox:getSelected()
-    table.insert(toCraft, temptable[b])
-    for _,label in ipairs(toCraft) do
-        for i,j in ipairs(craftables) do                 
+ 
+function craftmanager(arg1)
+      label = arg1
+        for i,j in ipairs(craftables) do
+           if (j.getItemStack().label == label) then                
             crafting[label] = j.request(j.getItemStack().size)
                 if crafting[label] == nil or crafting[label].isCanceled() == true then
-                    print("fail "..j.getItemStack().size .. " x " .. label)
                     crafting[label] = nil
                 else
-                    print("success "..j.getItemStack().size .. " x " .. label)
+                    crafting = {}
+                    label = nil
                 end
-                   
-          break;
+           end        
         end
-   
     end
-end
