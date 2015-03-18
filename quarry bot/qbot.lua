@@ -260,6 +260,11 @@ function teardown()
 end
 
 function newSpot()
+uptime = computer.upTime()
+if uptime >= 43000 then
+    os.sleep(1800)
+end
+    
 qbottable.status = "moving to new spot"
 x = x + 16
 qbottable.x = math.floor(qbottable.x + x)

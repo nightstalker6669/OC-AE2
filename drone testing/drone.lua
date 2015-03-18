@@ -38,7 +38,7 @@ local function findPlayer()
     end
 end
 local function moveDrone(playerx,playery,playerz)
-	local drone.x = playerx - drone.x
+	local drone.x = (playerx - drone.x)
 	local drone.y = playery - drone.y
 	local drone.z = playerz - drone.z
 	local cmd = "drone.move("..drone.x..","..drone.y..","..drone.z..")"

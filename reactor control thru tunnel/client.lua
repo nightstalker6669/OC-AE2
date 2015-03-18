@@ -9,7 +9,6 @@ local gpu = component.gpu
 local reactorinfo = {}
 gpu.setResolution(45, 16)
 term.clear()
-tun.send("reactorinfo")
     local _, _, from, port, _, message = event.pull("modem_message")
         if string.find(message, "isactive") ~= nil then
             reactorinfo = s.unserialize(message)
@@ -50,9 +49,9 @@ printXY(11, 1, "=========================")
         printXY(12, 1, "Charge State: Discharging")
     end
 printXY(13, 1, "Current Capacitor: " ..reactorinfo.curcap.." / "..reactorinfo.maxcapacity)
+printXY(14, 1, "Average Input: "..round(reactorinfo.avgreceived, 2).." RF/Tick")
+printXY(15, 1, "Average Output: "..round(reactorinfo.avgsent, 2).." RF/Tick")
  
-
-        tun.send("reactorinfo")
     local _, _, from, port, _, message = event.pull("modem_message")
         if string.find(message, "isactive") ~= nil then
             reactorinfo = s.unserialize(message)

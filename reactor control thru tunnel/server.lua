@@ -16,12 +16,9 @@ print("reactor control relay initiating...")
 print("gathering information about the connected reactor.")
 print("ready to transmit data.")
 while running do
-    local _, _, from, port, _, message = event.pull("modem_message")
-    if message == "reactorinfo" then
         reactorinfo = {["maxcapacity"] = pm.getMaxPowerInCapBanks(), ["curcap"] = pm.getPowerInCapBanks(), ["avgreceived"]= pm.getAverageEnergyReceived(), ["avgsent"] = pm.getAverageEnergySent(), ["ppt"] = pm.getPowerPerTick(), ["isactive"] = br.getActive(), ["casetemp"] = br.getCasingTemperature(), ["energytick"] = br.getEnergyProducedLastTick(), ["fuelamt"] = br.getFuelAmount(), ["fuelmax"] = br.getFuelAmountMax(), ["fuelconsumed"] = br.getFuelConsumedLastTick()}
         tun.send(s.serialize(reactorinfo))
-    end
-charging = reactorinfo.isactive 
+charging = reactorinfo.isactive
 percentpowerlow = math.floor(.1*reactorinfo.maxcapacity)
 percentpowerhigh = math.floor(.99*reactorinfo.maxcapacity)
  
