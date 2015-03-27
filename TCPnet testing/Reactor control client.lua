@@ -17,7 +17,7 @@ term.clear()
 handle:send(portopen, "request")
 local _, _, port, data = event.pull("tcpnet_message")
     if port == portopen then
-        reactorinfo = s.unserialize(data)
+       reactorinfo = s.unserialize(data)
     end
 charging = reactorinfo.isactive
  
@@ -53,9 +53,9 @@ end
                 event.listen("tcpnet_message", receiveinformation)
                 return
             end    
-end         
-
-
+end        
+ 
+ 
 function receiveinformation(_, _, port, data)
     if port == portopen and string.find(data, "reactorinfo") then
         reactorinfo = s.unserialize(data)
@@ -63,12 +63,12 @@ function receiveinformation(_, _, port, data)
         a = event.timer(30, keepalive)
     end
 end
-
-
-
+ 
+ 
+ 
 a = event.timer(30, keepalive)
 event.listen("tcpnet_message", receiveinformation)
-
+ 
 term.clear()
 while running do
 printXY(1, 1, "Reactor Information")
@@ -87,6 +87,7 @@ printXY(8, 1, "")
 printXY(9, 1, "")
 printXY(10, 1, "Capacitor Information")
 printXY(11, 1, "=========================")
+
     if reactorinfo.isactive == true then
         printXY(12, 1, "Charge State: Charging")
     else
@@ -95,8 +96,8 @@ printXY(11, 1, "=========================")
 printXY(13, 1, "Current Capacitor: " ..reactorinfo.curcap.." / "..reactorinfo.maxcapacity)
 printXY(14, 1, "Average Input: "..round(reactorinfo.avgreceived, 2).." RF/Tick")
 printXY(15, 1, "Average Output: "..round(reactorinfo.avgsent, 2).." RF/Tick")
-
+ 
 handle:send(1024, "request")
-os.sleep(2)
+os.sleep(.5)
 end
 term.clear()
